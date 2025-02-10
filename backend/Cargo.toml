@@ -4,3 +4,30 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+axum = "0.8.1"
+serde = { version = "1.0.217", features = ["derive"] }
+socketioxide = { version = "0.16.1", features = ["tracing", "msgpack"] }
+
+sqlx = { version = "0.8.3", features = [
+  "runtime-tokio-native-tls",
+  "mysql",
+  "macros",
+  "chrono",
+] }
+
+tokio = { version = "1.43.0", features = ["full"] }
+tower = "0.5.2"
+tower-http = { version = "0.6.2", features = ["cors", "fs"] }
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+uuid = { version = "1.12.1", features = ["serde", "v4"] }
+dotenv = "0.15.0"
+chrono = { version = "0.4.39", features = ["serde"] }
+anyhow = "1.0.95"
+axum-extra = "0.10.0"
+tracing-appender = "0.2.3"
+
+
+[dev-dependencies]
+# Dependências para testes e desenvolvimento da aplicação
+sqlx-cli = { version = "0.8.3", features = ["mysql"] }
