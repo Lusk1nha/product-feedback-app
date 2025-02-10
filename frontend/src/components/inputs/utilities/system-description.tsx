@@ -15,4 +15,6 @@ const SystemDescription = memo((props: Readonly<SystemDescriptionProps>) => {
   );
 });
 
+SystemDescription.displayName = "SystemDescription";
+
 export { SystemDescription };

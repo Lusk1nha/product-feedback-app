@@ -18,4 +18,6 @@ const CommentsIndicator = memo((props: Readonly<CommentsIndicatorProps>) => {
   );
 });
 
+CommentsIndicator.displayName = "CommentsIndicator";
+
 export { CommentsIndicator };

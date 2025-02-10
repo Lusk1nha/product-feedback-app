@@ -1,4 +1,4 @@
-import { HTMLAttributes, memo, SVGProps } from "react";
+import { memo, SVGProps } from "react";
 
 interface PencilIconProps extends SVGProps<SVGSVGElement> {
   className?: string;

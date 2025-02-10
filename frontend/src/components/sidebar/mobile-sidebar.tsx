@@ -3,14 +3,7 @@
 import { memo, useState } from "react";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetOverlay,
-  SheetPortal,
-  SheetTitle,
-} from "../ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "../ui/sheet";
 
 import { RenderCategorySelector } from "../category-selector/render-category-selector";
 import { RoadmapVisualizer } from "./../roadmap-visualizer";

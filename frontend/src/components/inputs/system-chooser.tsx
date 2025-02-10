@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Check, ChevronUp, PencilOff } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Control, Controller, FieldValues, Path } from "react-hook-form";
+
 import {
   useFloating,
   autoUpdate,
@@ -11,14 +11,13 @@ import {
   flip,
   shift,
 } from "@floating-ui/react";
-import { SystemError } from "./utilities/system-error";
 
 export type SystemChooserOption = {
   value: unknown;
   label: string;
 };
 
-interface SystemChooserProps<T extends FieldValues> {
+interface SystemChooserProps {
   options: SystemChooserOption[];
   value?: string;
 
@@ -28,9 +27,7 @@ interface SystemChooserProps<T extends FieldValues> {
   disabled?: boolean;
 }
 
-export function SystemChooser<F extends FieldValues>(
-  props: Readonly<SystemChooserProps<F>>
-) {
+export function SystemChooser(props: Readonly<SystemChooserProps>) {
   const { options, onChange, value, placeholder, disabled } = props;
 
   return (
@@ -108,7 +105,11 @@ function StyledChooser(props: Readonly<StyledChooserProps>) {
       >
         <div className="flex items-center justify-between gap-x-1 sm:gap-x-2.5">
           <div className="flex items-center gap-x-0.5 sm:gap-x-1 text-[#F2F4FE]">
-            <p className={cn("hidden sm:block text-[13px] sm:text-sm font-normal")}>
+            <p
+              className={cn(
+                "hidden sm:block text-[13px] sm:text-sm font-normal"
+              )}
+            >
               {placeholder}
             </p>
 

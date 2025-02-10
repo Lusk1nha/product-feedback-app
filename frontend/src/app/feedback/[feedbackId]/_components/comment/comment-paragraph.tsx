@@ -17,4 +17,6 @@ const CommentParagraph = memo((props: Readonly<CommentParagraphProps>) => {
   );
 });
 
+CommentParagraph.displayName = "CommentParagraph";
+
 export { CommentParagraph };

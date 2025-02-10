@@ -24,7 +24,7 @@ export function SystemTextArea<F extends FieldValues>(
     <Controller
       control={control}
       name={name}
-      render={({ field: { ref, ...field }, fieldState }) => (
+      render={({ field: { ref: _, ...field }, fieldState }) => (
         <StyledTextArea
           {...field}
           placeholder={placeholder}

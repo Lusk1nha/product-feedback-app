@@ -1,4 +1,4 @@
-import { Comment, CommentResponse } from "@/shared/types/comment-type";
+import { CommentResponse } from "@/shared/types/comment-type";
 import { CommentsRender } from "./comments-render";
 
 interface GetCommentsProps {

@@ -22,4 +22,6 @@ const SystemLabel = memo((props: Readonly<SystemLabelProps>) => {
   );
 });
 
+SystemLabel.displayName = "SystemLabel";
+
 export { SystemLabel };
