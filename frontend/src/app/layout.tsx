@@ -4,8 +4,9 @@ import { Jost } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 
-const systemFont = Jost({
+const jostFont = Jost({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={systemFont.className}>
+      <body className={jostFont.className}>
         <Providers>{children}</Providers>
       </body>
     </html>
