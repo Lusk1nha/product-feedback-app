@@ -38,7 +38,7 @@ export function DesktopRoadmapContent(
     });
 
     return roadmaps;
-  }, [feedbacksResponse]);
+  }, [feedbacksResponse, tabs]);
 
   function mountRoadmap(
     status: FeedbackStatusType,

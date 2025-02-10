@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { CommentHeader } from "./comment-header";
 import { ReplyForm } from "./reply-form";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { Comment } from "@/shared/types/comment-type";
 import { CommentParagraph } from "./comment-paragraph";
 import { RenderReplies } from "./replies-render";

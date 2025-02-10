@@ -38,4 +38,6 @@ const CommentHeader = memo((props: Readonly<CommentHeaderProps>) => {
   );
 });
 
+CommentHeader.displayName = "CommentHeader";
+
 export { CommentHeader };

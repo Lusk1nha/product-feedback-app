@@ -1,7 +1,7 @@
 "use client";
 
 import { SystemTabs, TabOption } from "@/components/system-tabs";
-import { useCallback, useLayoutEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Roadmap, RoadmapList } from "./roadmap-list";
 import {
   Feedback,
@@ -36,7 +36,7 @@ export function MobileRoadMapContent(
       setCurrentTab(value as FeedbackStatusType);
       router.push(pathname + `?tab=${value}`);
     },
-    [setCurrentTab]
+    [setCurrentTab, router, pathname]
   );
 
   function mountRoadmap(
@@ -78,7 +78,7 @@ export function MobileRoadMapContent(
       tab.description,
       feedbacks
     );
-  }, [feedbacksResponse, currentTab]);
+  }, [feedbacksResponse, currentTab, tabs]);
 
   return (
     <div className="w-full h-full flex flex-col">

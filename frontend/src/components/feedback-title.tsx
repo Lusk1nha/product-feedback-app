@@ -15,4 +15,6 @@ const FeedbackTitle = memo((props: Readonly<FeedbackTitleProps>) => {
   );
 });
 
+FeedbackTitle.displayName = "FeedbackTitle";
+
 export { FeedbackTitle };

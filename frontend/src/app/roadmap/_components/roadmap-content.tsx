@@ -2,6 +2,7 @@ import { TabOption } from "@/components/system-tabs";
 import { MobileRoadMapContent } from "./mobile-roadmap-content";
 import { FeedbackMockup } from "@/shared/mockups/feedback-mockup";
 import { DesktopRoadmapContent } from "./desktop-roadmap-content";
+import { Suspense } from "react";
 
 const TABS_STATUS: TabOption[] = [
   {
@@ -32,10 +33,12 @@ export async function RoadmapContent() {
       </div>
 
       <div className="flex md:hidden">
-        <MobileRoadMapContent
-          feedbacksResponse={feedbacks}
-          tabs={TABS_STATUS}
-        />
+        <Suspense>
+          <MobileRoadMapContent
+            feedbacksResponse={feedbacks}
+            tabs={TABS_STATUS}
+          />
+        </Suspense>
       </div>
     </>
   );

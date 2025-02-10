@@ -31,7 +31,7 @@ export function CommentsRender(props: Readonly<CommentsRenderProps>) {
         {index !== flatComments.length - 1 && <Separator />}
       </div>
     ));
-  }, [feedbackId, result]);
+  }, [feedbackId, result, factory, getCommentsWithReplies]);
 
   return <ul className="flex flex-col gap-y-6">{commentsList}</ul>;
 }

@@ -28,4 +28,6 @@ const FeedbackDetails = memo((props: Readonly<FeedbackDetailsProps>) => {
   );
 });
 
+FeedbackDetails.displayName = "FeedbackDetails";
+
 export { FeedbackDetails };

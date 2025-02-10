@@ -35,9 +35,7 @@ export function RoadmapVisualizer(props: Readonly<IRoadmapVisualizerProps>) {
   );
 }
 
-interface IRoadmapItemCompProps extends RoadmapItem {}
-
-function RoadmapItemComp(props: Readonly<IRoadmapItemCompProps>) {
+function RoadmapItemComp(props: Readonly<RoadmapItem>) {
   const { title, color, total } = props;
 
   return (

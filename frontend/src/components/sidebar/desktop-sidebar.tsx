@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { AppWaterMark } from "../app-water-mark";
 import { CategorySelector } from "../category-selector/category-selector";
 import { RoadmapVisualizer } from "../roadmap-visualizer";
+import { Suspense } from "react";
 
 export function DesktopSidebar() {
   return (
@@ -11,9 +12,11 @@ export function DesktopSidebar() {
       </AppearanceWrapper>
 
       <AppearanceWrapper className="h-[178px] md:h-auto sm:pr-[18px] md:pr-12">
-        <CategorySelector
-          categories={["All", "UI", "UX", "Enhancement", "Bug", "Feature"]}
-        />
+        <Suspense>
+          <CategorySelector
+            categories={["All", "UI", "UX", "Enhancement", "Bug", "Feature"]}
+          />
+        </Suspense>
       </AppearanceWrapper>
 
       <AppearanceWrapper className="h-[178px]">

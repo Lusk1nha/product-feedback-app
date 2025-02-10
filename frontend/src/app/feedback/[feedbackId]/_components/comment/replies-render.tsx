@@ -28,4 +28,6 @@ const RenderReplies = memo((props: Readonly<RenderRepliesProps>) => {
   );
 });
 
+RenderReplies.displayName = "RenderReplies";
+
 export { RenderReplies };

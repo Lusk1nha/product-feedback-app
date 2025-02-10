@@ -14,4 +14,6 @@ const SystemError = memo((props: Readonly<SystemErrorProps>) => {
   );
 });
 
+SystemError.displayName = "SystemError";
+
 export { SystemError };
