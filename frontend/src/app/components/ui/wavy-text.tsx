@@ -12,7 +12,6 @@ interface WavyTextProps extends HTMLMotionProps<"div"> {
  * Component that creates a wavy text effect
  * Repo: https://codesandbox.io/p/sandbox/framer-motion-react-wavy-letter-text-animation-j69kkr?file=%2Fsrc%2FWavyText.tsx%3A63%2C10
  */
-
 const WavyText: FC<WavyTextProps> = memo(
   ({ text, delay = 0, duration = 0.05, replay, ...props }: WavyTextProps) => {
     const letters = Array.from(text);
@@ -66,5 +65,7 @@ const WavyText: FC<WavyTextProps> = memo(
     );
   }
 );
+
+WavyText.displayName = "WavyText";
 
 export { WavyText };
