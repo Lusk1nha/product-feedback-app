@@ -12,3 +12,7 @@ export abstract class MockupGenerator<T, R> {
     return new Date(date);
   }
 }
+
+export async function delayMs(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

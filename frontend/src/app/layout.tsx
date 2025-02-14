@@ -3,6 +3,7 @@ import { Jost } from "next/font/google";
 
 import "./globals.css";
 import Providers from "./providers";
+import { BaseNextLayoutProps } from "@/shared/types/next-type";
 
 const jostFont = Jost({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -17,9 +18,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<BaseNextLayoutProps>) {
   return (
     <html lang="en">
       <body className={jostFont.className}>
