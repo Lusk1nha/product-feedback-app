@@ -8,6 +8,8 @@ pub struct EnvironmentApp {
     pub port: u16,
 
     pub is_prod: bool,
+
+    pub version: String,
 }
 
 impl EnvironmentApp {
@@ -22,11 +24,15 @@ impl EnvironmentApp {
 
         let environment = env::var("ENVIRONMENT").expect("ENVIRONMENT must be set");
 
+        let version = env::var("VERSION").expect("VERSION must be set");
+
         Self {
             database_url,
             port,
 
             is_prod: environment == "production",
+
+            version,
         }
     }
 }

@@ -1,32 +1,27 @@
+use crate::{
+    api_routes::{auth_routes::auth_routes, root_routes::root_routes},
+    api_state::AppState,
+    controllers::not_found_controller::NotFoundController,
+    http::cors::configure_cors,
+};
+use axum::Router;
 use std::sync::Arc;
 
-use axum::{http::StatusCode, response::IntoResponse, Json, Router};
-
-use crate::{
-    api_state::AppState,
-    http::{cors::configure_cors, error_response::ErrorResponse},
-};
-
 pub const API_PATH: &str = "/api";
+pub const AUTH_PATH: &str = "/auth";
 
 pub fn create_routes(state: Arc<AppState>) -> Router {
     let cors = configure_cors();
     let api_routes = api_routes(state.clone());
 
-    let api_routes = api_routes.fallback(not_found_route);
+    let api_routes = api_routes.fallback(NotFoundController::not_found_route);
 
     Router::new().nest(API_PATH, api_routes).layer(cors)
 }
 
 pub fn api_routes(state: Arc<AppState>) -> Router {
-    Router::new()
-}
+    let root_routes = root_routes(state.clone());
+    let auth_routes = auth_routes(state.clone());
 
-pub async fn not_found_route() -> impl IntoResponse {
-    let response = ErrorResponse {
-        status_code: StatusCode::NOT_FOUND,
-        message: "Route not found, for more information check the documentation".to_string(),
-    };
-
-    (StatusCode::NOT_FOUND, Json(response))
+    root_routes.nest(AUTH_PATH, auth_routes)
 }

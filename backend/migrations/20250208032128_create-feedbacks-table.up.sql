@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS feedbacks (
-  id BINARY(16) PRIMARY KEY NOT NULL COMMENT 'UUID em formato binário para melhor performance',
+  id CHAR(36) PRIMARY KEY NOT NULL COMMENT 'UUID em formato binário para melhor performance',
   title VARCHAR(255) NOT NULL COMMENT 'Título do feedback',
   content TEXT NOT NULL COMMENT 'Conteúdo do feedback',
-  created_by BINARY(16) NOT NULL COMMENT 'ID do usuário que fez o feedback',
+  created_by CHAR(36) NOT NULL COMMENT 'ID do usuário que fez o feedback',
   category_id INT NOT NULL COMMENT 'ID da categoria associada ao feedback',
   status ENUM('Planned', 'In-Progress', 'Live') NOT NULL DEFAULT 'Planned' COMMENT 'Status do feedback',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Data e hora de criação do feedback',

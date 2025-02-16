@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS sessions (
-  id BINARY(16) PRIMARY KEY NOT NULL COMMENT 'UUID em formato binário para melhor performance',
-  user_id BINARY(16) NOT NULL COMMENT 'ID do usuário',
+  id CHAR(36) PRIMARY KEY NOT NULL COMMENT 'UUID em formato binário para melhor performance',
+  user_id CHAR(36) NOT NULL COMMENT 'ID do usuário',
   access_token VARCHAR(512) NOT NULL COMMENT 'Token de acesso da sessão',
   refresh_token_hash CHAR(64) NOT NULL COMMENT 'Token de atualização da sessão',
   access_expires_at DATETIME NOT NULL COMMENT 'Data e hora de expiração do token de acesso',
