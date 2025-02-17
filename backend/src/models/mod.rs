@@ -1,1 +1,2 @@
-pub mod users_model;
+pub mod user_model;
+pub mod session_model;

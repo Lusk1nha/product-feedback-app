@@ -1,6 +1,6 @@
 use crate::{
     database::DatabaseApp,
-    models::users_model::{CreateUser, User},
+    models::user_model::{CreateUser, User},
 };
 
 #[derive(Clone)]
@@ -40,15 +40,27 @@ impl UsersRepository {
             .execute(&mut *tx)
             .await?;
 
-        let user: User = sqlx::query_as::<_, User>(&format!(
-            "SELECT {USER_FIELDS} FROM users WHERE id = ?"
-        ))
-        .bind(&create_user.id)
-        .fetch_one(&mut *tx)
-        .await?;
+        let user: User =
+            sqlx::query_as::<_, User>(&format!("SELECT {USER_FIELDS} FROM users WHERE id = ?"))
+                .bind(&create_user.id)
+                .fetch_one(&mut *tx)
+                .await?;
 
         tx.commit().await?;
 
         Ok(user)
+    }
+
+    pub async fn update_last_login_transaction(&self, user_id: &str) -> Result<(), sqlx::Error> {
+        let mut tx = self.database.pool.begin().await?;
+
+        sqlx::query("UPDATE users SET last_login_at = CURRENT_TIMESTAMP WHERE id = ?")
+            .bind(user_id)
+            .execute(&mut *tx)
+            .await?;
+
+        tx.commit().await?;
+
+        Ok(())
     }
 }

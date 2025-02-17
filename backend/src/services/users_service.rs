@@ -1,8 +1,9 @@
 use bcrypt::DEFAULT_COST;
 
 use crate::{
+    errors::user_errors::UserError,
     libs::{guids::create_uuid_v4, passwords::hash_password},
-    models::users_model::{CreateUser, User},
+    models::user_model::{CreateUser, User},
     repositories::users_repository::UsersRepository,
 };
 
@@ -16,27 +17,38 @@ impl UsersService {
         Self { users_repository }
     }
 
-    pub async fn get_user_by_email(&self, email: &str) -> Result<Option<User>, sqlx::Error> {
-        self.users_repository.get_user_by_email(email).await
+    pub async fn get_user_by_email(&self, email: &str) -> Result<Option<User>, UserError> {
+        self.users_repository
+            .get_user_by_email(email)
+            .await
+            .map_err(UserError::Database)
     }
 
-    pub async fn create_user(&self, email: &str, password: &str) -> Result<User, sqlx::Error> {
+    pub async fn create_user(&self, email: &str, password: &str) -> Result<User, UserError> {
         let id = create_uuid_v4();
-        let password_hash = match hash_password(&password, DEFAULT_COST) {
-            Ok(hash) => hash,
-            Err(e) => {
-                return Err(sqlx::Error::Decode(Box::new(e)));
-            }
-        };
+        let password_hash = hash_password(&password, DEFAULT_COST).map_err(UserError::Password)?;
 
-        let create_user = CreateUser {
+        let create_user_payload = CreateUser {
             id,
             email: email.to_string(),
             password_hash,
         };
 
-        self.users_repository
-            .create_user_transaction(&create_user)
+        let user = self
+            .users_repository
+            .create_user_transaction(&create_user_payload)
             .await
+            .map_err(UserError::Database)?;
+
+        Ok(user)
+    }
+
+    pub async fn update_last_login(&self, user_id: &str) -> Result<(), UserError> {
+        self.users_repository
+            .update_last_login_transaction(user_id)
+            .await
+            .map_err(UserError::Database)?;
+
+        Ok(())
     }
 }

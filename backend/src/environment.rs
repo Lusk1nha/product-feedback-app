@@ -9,6 +9,8 @@ pub struct EnvironmentApp {
 
     pub is_prod: bool,
 
+    pub jwt_secret: String,
+
     pub version: String,
 }
 
@@ -24,6 +26,8 @@ impl EnvironmentApp {
 
         let environment = env::var("ENVIRONMENT").expect("ENVIRONMENT must be set");
 
+        let jwt_secret = env::var("JWT_SECRET").expect("JWT_SECRET must be set");
+
         let version = env::var("VERSION").expect("VERSION must be set");
 
         Self {
@@ -31,7 +35,7 @@ impl EnvironmentApp {
             port,
 
             is_prod: environment == "production",
-
+            jwt_secret,
             version,
         }
     }

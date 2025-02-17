@@ -3,14 +3,17 @@ mod api_state;
 mod controllers;
 mod database;
 mod environment;
+mod errors;
 mod http;
 mod libs;
 mod logger;
+mod middlewares;
 mod models;
 mod repositories;
 mod router;
 mod server;
 mod services;
+mod types;
 
 use api_state::AppState;
 use database::DatabaseApp;
@@ -28,7 +31,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let database = DatabaseApp::new(&environment).await?;
     database.run_migrations().await?;
 
-    let state = AppState::new(database.clone(), environment.clone());
+    let state = AppState::new(database.clone(), environment.clone())?;
 
     let api_routes = create_routes(state.clone());
 

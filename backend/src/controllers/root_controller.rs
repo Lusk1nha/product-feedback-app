@@ -26,12 +26,12 @@ impl RootController {
         let environment = &state.environment;
 
         let response = JsonRootResponse {
-          title: "Welcome to Note Management API!".to_string(),
-          description: "This is a simple note management API. You can create, read, update and delete notes.".to_string(),
-          version: environment.version.to_string(),
-          
-          authors: AUTHORS.clone(),
-      };
+            title: "Welcome to Personal Feedbacks API".to_string(),
+            description: "This is a simple API to manage feedbacks".to_string(),
+            version: environment.version.to_string(),
+
+            authors: AUTHORS.clone(),
+        };
 
         Ok((StatusCode::OK, Json(response)))
     }
