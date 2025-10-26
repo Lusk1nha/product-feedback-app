@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import type { InferSelectModel } from 'drizzle-orm';
+import { eq, type InferSelectModel } from 'drizzle-orm';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DrizzleAsyncProvider } from '../drizzle.provider';
 import { schema, DatabaseSchema } from '../schemas'; // ⬅️ importa o schema e o tipo
@@ -22,11 +22,35 @@ export class UserDrizzleRepository implements UserRepository {
     return await this.db.select().from(schema.users);
   }
 
+  async findByEmail(emailVo: Email): Promise<User | null> {
+    const email = emailVo.getValue();
+
+    const [user] = await this.db
+      .select()
+      .from(schema.users)
+      .where(eq(schema.users.email, email))
+      .limit(1);
+
+    if (!user) {
+      return null;
+    }
+
+    return User.fromBuilder({
+      id: user.id,
+      username: user.username,
+      email: Email.create(user.email),
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
+  }
+
   async create(user: User): Promise<User> {
+    const email = user.email.getValue();
+
     const [created] = await this.db
       .insert(schema.users)
       .values({
-        email: user.email.getValue(),
+        email,
         username: user.username,
         avatarUrl: user.avatarUrl,
       })
