@@ -1,15 +1,15 @@
 export abstract class BaseEntity {
-  readonly id?: number;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
+  public readonly id?: number;
+  public readonly createdAt: Date;
+  public readonly updatedAt: Date;
 
-  protected constructor(props?: {
+  protected constructor(params?: {
     id?: number;
     createdAt?: Date;
     updatedAt?: Date;
   }) {
-    this.id = props?.id ?? undefined;
-    this.createdAt = props?.createdAt ?? new Date();
-    this.updatedAt = props?.updatedAt ?? new Date();
+    this.id = params?.id;
+    this.createdAt = params?.createdAt ?? new Date();
+    this.updatedAt = params?.updatedAt ?? this.createdAt;
   }
 }

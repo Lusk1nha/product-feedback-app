@@ -1,67 +1,43 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { eq, type InferSelectModel } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { DrizzleAsyncProvider } from '../drizzle.provider';
-import { schema, DatabaseSchema } from '../schemas'; // ⬅️ importa o schema e o tipo
-import { UserRepository } from 'src/core/domain/repositories/user.repository';
+import { schema, DatabaseSchema } from '../schemas';
+import { IUserRepository } from 'src/core/domain/repositories/user.repository';
 import { User } from 'src/core/domain/entities/user.entity';
 import { Email } from 'src/core/domain/value-objects/email.vo';
-
-type UserModel = InferSelectModel<typeof schema.users>;
+import { UserMapper } from 'src/infra/mappers/user.mapper';
 
 export const USER_REPOSITORY = Symbol('USER_REPOSITORY');
 
 @Injectable()
-export class UserDrizzleRepository implements UserRepository {
+export class UserDrizzleRepository implements IUserRepository {
   constructor(
     @Inject(DrizzleAsyncProvider)
     private readonly db: NodePgDatabase<DatabaseSchema>,
   ) {}
 
-  async findAll(): Promise<UserModel[]> {
-    return await this.db.select().from(schema.users);
+  async findAll(): Promise<User[]> {
+    const users = await this.db.select().from(schema.users);
+    return users.map(UserMapper.toDomain);
   }
 
   async findByEmail(emailVo: Email): Promise<User | null> {
-    const email = emailVo.getValue();
-
     const [user] = await this.db
       .select()
       .from(schema.users)
-      .where(eq(schema.users.email, email))
+      .where(eq(schema.users.email, emailVo.getValue()))
       .limit(1);
 
-    if (!user) {
-      return null;
-    }
-
-    return User.fromBuilder({
-      id: user.id,
-      username: user.username,
-      email: Email.create(user.email),
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    });
+    return user ? UserMapper.toDomain(user) : null;
   }
 
   async create(user: User): Promise<User> {
-    const email = user.email.getValue();
-
     const [created] = await this.db
       .insert(schema.users)
-      .values({
-        email,
-        username: user.username,
-        avatarUrl: user.avatarUrl,
-      })
+      .values(UserMapper.toPersistence(user))
       .returning();
 
-    return User.fromBuilder({
-      id: created.id,
-      username: created.username,
-      email: Email.create(created.email),
-      createdAt: created.createdAt,
-      updatedAt: created.updatedAt,
-    });
+    return UserMapper.toDomain(created);
   }
 }

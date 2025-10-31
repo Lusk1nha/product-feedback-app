@@ -7,6 +7,7 @@ import {
 import { DrizzleModule } from 'src/infra/database/database.module';
 import { FindAllUsersUseCase } from 'src/core/use-cases/find-all-users.usecase';
 import { CreateUserUseCase } from 'src/core/use-cases/create-user.usecase';
+import { FindByEmailUseCase } from 'src/core/use-cases/find-by-email.usecase';
 
 @Module({
   imports: [DrizzleModule],
@@ -17,6 +18,7 @@ import { CreateUserUseCase } from 'src/core/use-cases/create-user.usecase';
       useClass: UserDrizzleRepository,
     },
     FindAllUsersUseCase,
+    FindByEmailUseCase,
     CreateUserUseCase,
   ],
 })

@@ -5,8 +5,6 @@ export class UserBuilder {
   private username?: string;
   private email?: Email;
   private avatarUrl?: string;
-  private createdAt?: Date;
-  private updatedAt?: Date;
 
   static create(): UserBuilder {
     return new UserBuilder();
@@ -18,7 +16,7 @@ export class UserBuilder {
   }
 
   withEmail(email: string): this {
-    this.email = Email.create(email);
+    this.email = Email.from(email);
     return this;
   }
 
@@ -27,23 +25,15 @@ export class UserBuilder {
     return this;
   }
 
-  withTimestamps(createdAt: Date, updatedAt?: Date): this {
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt ?? createdAt;
-    return this;
-  }
-
   build(): User {
     if (!this.username || !this.email) {
       throw new Error('Username and Email are required');
     }
 
-    return User.fromBuilder({
+    return User.create({
       username: this.username,
       email: this.email,
-      avatarUrl: this.avatarUrl,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      avatarUrl: this.avatarUrl ?? null,
     });
   }
 }
